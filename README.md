@@ -6,12 +6,13 @@ The production environment will eventually be hosted at [save.c0de.link](https:/
 
 ## Completed Features:
 * Database - Capable of any user-defined database file (multiple instances); Has Create/Read/Update/Delete methods for bookmarks
+* API - All of the features in the database have been implemented in the API (currently unauthenticated and unsanitized and everything is GET Requests) - Uses [Bottle](https://bottlepy.org/docs/dev/)
 
 ## Features In Progress:
-* API - About half of the features in the database have been implemented in the API (currently unauthenticated and unsanitized and everything is GET Requests) - Uses [Bottle](https://bottlepy.org/docs/dev/)
+* Authentication - Uses [Telethon](https://github.com/LonamiWebs/Telethon) to provide me with an API key
 
 ## Upcoming Features (TODO):
-* Authentication - I'm thinking about using [Telethon](https://github.com/LonamiWebs/Telethon) which will send me auth tokens, which would then be sent along with the request
+* ~~Authentication - I'm thinking about using [Telethon](https://github.com/LonamiWebs/Telethon) which will send me auth tokens, which would then be sent along with the request~~
 * Website UI - I want the website to be extremely easy to use. I plan on using [Bootstrap 4](https://getbootstrap.com/) with a style very similar to [lob.li](https://lob.li)
 * ~~API - Able to accept various HTTP methods (POST, GET for sure, possibly PUT and DELETE). This will interface with the database, and provide data sanitization. I'm planning on using [Bottle](https://bottlepy.org/docs/dev/) to accomplish this~~
 * Chrome Extension - This will allow exporting bookmarks from Chrome into this service, as well as quickly adding pages, most likely through a right click menu and by clicking on the icon
