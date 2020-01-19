@@ -95,13 +95,13 @@ class Database:
             exist in the database adding a new entry if that
             is the case. If the `uri` is already stored
             (based on the generated UUID), the existing
-            entry will be returned instead.
+            entry's UUID will be returned instead.
         """
         uri_uuid = uuid.uuid5(uuid.NAMESPACE_URL, uri)
 
         bookmark_exists = self.get_bookmark(uri_uuid)
         if bookmark_exists != None:
-            return bookmark_exists
+            return bookmark_exists[0]
 
         query = """
             INSERT INTO bookmarks (
@@ -124,6 +124,10 @@ class Database:
         if self.get_bookmark(bookmark_id) != None:
             query = "DELETE FROM bookmarks WHERE bookmark_id = ?"
             self.cursor.execute(query, (bookmark_id, ))
+
+        if self.get_bookmark(bookmark_id) == None:
+            return True
+        return False
 
     def update_bookmark_title(self, bookmark_id, new_title):
         """
