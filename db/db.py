@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 # Copyright 2020 - David Todd (c0de@c0defox.es)
 # Licensed under the MIT License (https://opensource.org/licenses/MIT)
-# This file contains the database for a simple bookmarking application
+
+"""
+    This file contains the database for a simple bookmarking application
+"""
 
 import datetime
 import sqlite3
