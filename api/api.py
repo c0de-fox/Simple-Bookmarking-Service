@@ -121,7 +121,7 @@ class API:
             everything about the bookmark
         """
         response.content_type = self.response_type
-        bookmark = self.database.update_bookmark_title(bookmark_id, title)
+        bookmark = self.database.update_bookmark_title(UUID(bookmark_id), title)
 
         if bookmark == None:
             return abort(404, "Provided bookmark doesn't exist or has been deleted")
@@ -139,7 +139,7 @@ class API:
             everything about the bookmark
         """
         response.content_type = self.response_type
-        bookmark = self.database.update_bookmark_uri(bookmark_id, uri)
+        bookmark = self.database.update_bookmark_uri(UUID(bookmark_id), uri)
 
         if bookmark == None:
             return abort(404, "Provided bookmark doesn't exist or has been deleted")
