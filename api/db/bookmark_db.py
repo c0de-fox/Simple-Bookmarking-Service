@@ -9,6 +9,7 @@
 import datetime
 import sqlite3
 import uuid
+from .db import Database
 
 class BookmarkDatabase(Database):
     """

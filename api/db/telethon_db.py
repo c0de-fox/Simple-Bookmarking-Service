@@ -10,6 +10,7 @@
 import datetime
 import sqlite3
 import uuid
+from .db import Database
 
 class TelethonDatabase(Database):
     """
