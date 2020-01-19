@@ -7,6 +7,7 @@ verify_ssl = true
 
 [packages]
 bottle = "*"
+telethon = "*"
 
 [requires]
 python_version = "3.8"
