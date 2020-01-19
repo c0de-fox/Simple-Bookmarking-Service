@@ -9,10 +9,17 @@ The production environment will eventually be hosted at [save.c0de.link](https:/
 This project uses [Pipenv](https://pipenv.readthedocs.io/en/latest/) to manage the dependencies, so install that first after cloning this repository.
 
 * Install dependencies - `pipenv install`
+* Create a Telegram bot (see Creating a Telegram Bot)
 * Enter the environment - `pipenv shell`
-* Start the server - `python server.py`
+* Start the server - `bash run.sh`
 
 The server will be running on `http://localhost:8080/`
+
+### Creating a Telegram bot
+
+1. Login to [my.telegram.org/apps](https://my.telegram.org/apps) and create a Web App - You will need the `api_id` and `api_hash`
+1. Message the [BotFather](https://t.me/BotFather) to get an `api_token`
+1. Copy `sample.env` to `.env` and fill in the details from the previous steps
 
 ## Available Requests
 
