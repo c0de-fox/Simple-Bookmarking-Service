@@ -124,6 +124,7 @@ class Database:
         if self.get_bookmark(bookmark_id) != None:
             query = "DELETE FROM bookmarks WHERE bookmark_id = ?"
             self.cursor.execute(query, (bookmark_id, ))
+            self.connection.commit()
 
         if self.get_bookmark(bookmark_id) == None:
             return True
