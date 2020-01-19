@@ -138,10 +138,16 @@ class API:
             Returns a JSON object containing
             everything about the bookmark
         """
+        conflict_msg = "The new bookmark_id matches one already existing in the database." \
+                       "Perhaps you want to delete this bookmark instead?"
+
         response.content_type = self.response_type
         bookmark = self.database.update_bookmark_uri(UUID(bookmark_id), uri)
 
         if bookmark == None:
             return abort(404, "Provided bookmark doesn't exist or has been deleted")
+
+        if not bookmark:
+            return abort(409, conflict_msg)
 
         return json.dumps(self._get_bookmark_object(bookmark))
