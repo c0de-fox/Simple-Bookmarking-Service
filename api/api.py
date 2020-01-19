@@ -10,7 +10,7 @@ import json
 import datetime
 from pprint import pprint
 from uuid import UUID
-from bottle import response
+from bottle import response, abort
 from .db import Database
 
 class API:
@@ -56,6 +56,9 @@ class API:
         response.content_type = self.response_type
         bookmark = self.database.get_bookmark(UUID(bookmark_id))
 
+        if bookmark == None:
+            return abort(404, "Provided bookmark doesn't exist or has been deleted")
+
         # Maybe I need to use `sqlite3.Cursor.description` or `sqlite3.Row.keys()`
         bookmark_object = {
             'uuid': bookmark[0].hex,
@@ -76,6 +79,9 @@ class API:
         """
         response.content_type = self.response_type
         bookmarks = self.database.get_all_bookmarks()
+
+        if len(bookmarks) == 0:
+            return abort(404, "There are no bookmarks saved")
 
         bookmark_object = [
             {
