@@ -53,5 +53,8 @@ The following fields will be returned with `/get` and `/update` requests:
 * ~~Authentication - I'm thinking about using [Telethon](https://github.com/LonamiWebs/Telethon) which will send me auth tokens, which would then be sent along with the request~~
 * Website UI - I want the website to be extremely easy to use. I plan on using [Bootstrap 4](https://getbootstrap.com/) with a style very similar to [lob.li](https://lob.li)
 * ~~API - Able to accept various HTTP methods (POST, GET for sure, possibly PUT and DELETE). This will interface with the database, and provide data sanitization. I'm planning on using [Bottle](https://bottlepy.org/docs/dev/) to accomplish this~~
+    * Fetch various meta-data from the URI if it is reachable
+        * HTML title, favicon, etc
+    * Determine if a link is reachable
 * Chrome Extension - This will allow exporting bookmarks from Chrome into this service, as well as quickly adding pages, most likely through a right click menu and by clicking on the icon
 * Firefox Extension - Everything the Chrome extension can do
