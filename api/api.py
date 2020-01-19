@@ -11,7 +11,7 @@ import datetime
 from pprint import pprint
 from uuid import UUID
 from bottle import response, abort
-from .db import Database
+from .db import BookmarkDatabase, TelethonDatabase
 
 class API:
     """
@@ -26,7 +26,8 @@ class API:
             Setup some internal variables, such as various constants
             and the database connection
         """
-        self.database = Database('bookmarks.db')
+        self.bookmark_database = BookmarkDatabase('database.db')
+        self.telethon_database = TelethonDatabase('database.db')
         self.dt_fmt = "%H:%M:%S on %B %d %Y"
         self.response_type = 'application/json'
         self.format_date = datetime.datetime.strftime
@@ -52,7 +53,7 @@ class API:
             the UUID of the saved bookmark
         """
         response.content_type = self.response_type
-        bookmark = self.database.save_bookmark(uri, title)
+        bookmark = self.bookmark_database.save_bookmark(uri, title)
 
         return json.dumps({
             'uuid': bookmark.hex
@@ -67,7 +68,7 @@ class API:
             everything about the bookmark
         """
         response.content_type = self.response_type
-        bookmark = self.database.get_bookmark(UUID(bookmark_id))
+        bookmark = self.bookmark_database.get_bookmark(UUID(bookmark_id))
 
         if bookmark == None:
             return abort(404, "Provided bookmark doesn't exist or has been deleted")
@@ -82,7 +83,7 @@ class API:
             everything about each bookmark
         """
         response.content_type = self.response_type
-        bookmarks = self.database.get_all_bookmarks()
+        bookmarks = self.bookmark_database.get_all_bookmarks()
 
         if len(bookmarks) == 0:
             return abort(404, "There are no bookmarks saved")
@@ -109,7 +110,7 @@ class API:
         response.content_type = self.response_type
         return json.dumps({
             'uuid': bookmark_id,
-            'bookmark_deleted': self.database.delete_bookmark(UUID(bookmark_id)),
+            'bookmark_deleted': self.bookmark_database.delete_bookmark(UUID(bookmark_id)),
         })
 
     def update_bookmark_title(self, bookmark_id, title):
@@ -121,7 +122,7 @@ class API:
             everything about the bookmark
         """
         response.content_type = self.response_type
-        bookmark = self.database.update_bookmark_title(UUID(bookmark_id), title)
+        bookmark = self.bookmark_database.update_bookmark_title(UUID(bookmark_id), title)
 
         if bookmark == None:
             return abort(404, "Provided bookmark doesn't exist or has been deleted")
@@ -142,7 +143,7 @@ class API:
                        "Perhaps you want to delete this bookmark instead?"
 
         response.content_type = self.response_type
-        bookmark = self.database.update_bookmark_uri(UUID(bookmark_id), uri)
+        bookmark = self.bookmark_database.update_bookmark_uri(UUID(bookmark_id), uri)
 
         if bookmark == None:
             return abort(404, "Provided bookmark doesn't exist or has been deleted")
