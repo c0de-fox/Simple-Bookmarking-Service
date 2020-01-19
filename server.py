@@ -13,7 +13,7 @@ _api = API()
 
 @route('/')
 def index():
-    return template("This is the index")
+    return "This is the index"
 
 # I haven't figured out how to get these routes inside the API yet...
 @route('/save/<title>/<uri:path>')
