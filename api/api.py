@@ -83,7 +83,7 @@ class API:
                 'uri': bookmark[1],
                 'title': bookmark[2],
                 'date_created': self.format_date(bookmark[3], self.dt_fmt),
-                'date_updated': self.format_date(bookmark[4], self.dt_fmt) if bookmark[4] != None else ''
+                'date_updated': self.format_date(bookmark[4], self.dt_fmt) if bookmark[4] != None else '',
             } for bookmark in bookmarks
         ]
 
@@ -91,5 +91,13 @@ class API:
 
     def delete_bookmark(self, bookmark_id):
         """
+            Deletes the bookmark that is associated with `bookmark_id`
+
+            Returns a JSON object containing the bookmark's UUID,
+            and the status as to whether or not it was successfully deleted
         """
         response.content_type = self.response_type
+        return json.dumps({
+            'uuid': bookmark_id,
+            'bookmark_deleted': self.database.delete_bookmark(UUID(bookmark_id)),
+        })
