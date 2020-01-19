@@ -2,3 +2,4 @@
 *pycache*
 *.lock
 *~
+.vscode
