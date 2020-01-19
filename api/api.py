@@ -31,6 +31,19 @@ class API:
         self.response_type = 'application/json'
         self.format_date = datetime.datetime.strftime
 
+    def _get_bookmark_object(self, bookmark):
+        """
+            Shortcut to return the `bookmark_object` that several methods return
+        """
+        # Maybe I need to use `sqlite3.Cursor.description` or `sqlite3.Row.keys()`
+        return {
+            'uuid': bookmark[0].hex,
+            'uri': bookmark[1],
+            'title': bookmark[2],
+            'date_created': self.format_date(bookmark[3], self.dt_fmt),
+            'date_updated': self.format_date(bookmark[4], self.dt_fmt) if bookmark[4] != None else '',
+        }
+
     def save_bookmark(self, title, uri):
         """
             Save the bookmark with `title` and `uri`
@@ -59,16 +72,7 @@ class API:
         if bookmark == None:
             return abort(404, "Provided bookmark doesn't exist or has been deleted")
 
-        # Maybe I need to use `sqlite3.Cursor.description` or `sqlite3.Row.keys()`
-        bookmark_object = {
-            'uuid': bookmark[0].hex,
-            'uri': bookmark[1],
-            'title': bookmark[2],
-            'date_created': self.format_date(bookmark[3], self.dt_fmt),
-            'date_updated': self.format_date(bookmark[4], self.dt_fmt) if bookmark[4] != None else '',
-        }
-
-        return json.dumps(bookmark_object)
+        return json.dumps(self._get_bookmark_object(bookmark))
 
     def get_all_bookmarks(self):
         """
@@ -107,3 +111,37 @@ class API:
             'uuid': bookmark_id,
             'bookmark_deleted': self.database.delete_bookmark(UUID(bookmark_id)),
         })
+
+    def update_bookmark_title(self, bookmark_id, title):
+        """
+            Updates the bookmark that is associated
+            with `bookmark_id` with the provided `title`
+
+            Returns a JSON object containing
+            everything about the bookmark
+        """
+        response.content_type = self.response_type
+        bookmark = self.database.update_bookmark_title(bookmark_id, title)
+
+        if bookmark == None:
+            return abort(404, "Provided bookmark doesn't exist or has been deleted")
+
+        return json.dumps(self._get_bookmark_object(bookmark))
+
+    def update_bookmark_uri(self, bookmark_id, uri):
+        """
+            Updates the bookmark that is associated
+            with `bookmark_id` with the provided `uri`
+
+            This action will change the `bookmark_id`
+
+            Returns a JSON object containing
+            everything about the bookmark
+        """
+        response.content_type = self.response_type
+        bookmark = self.database.update_bookmark_uri(bookmark_id, uri)
+
+        if bookmark == None:
+            return abort(404, "Provided bookmark doesn't exist or has been deleted")
+
+        return json.dumps(self._get_bookmark_object(bookmark))

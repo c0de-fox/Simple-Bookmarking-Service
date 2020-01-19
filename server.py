@@ -33,5 +33,13 @@ def get_bookmark(bookmark_id):
 def delete_bookmark(bookmark_id):
     return _api.delete_bookmark(bookmark_id)
 
+@route('/update/title/<bookmark_id>/<title>')
+def update_bookmark_title(bookmark_id, title):
+    return _api.update_bookmark_title(bookmark_id, title)
+
+@route('/update/uri/<bookmark_id>/<uri:path>')
+def update_bookmark_uri(bookmark_id, uri):
+    return _api.update_bookmark_uri(bookmark_id, uri)
+
 if __name__ == '__main__':
     run(host='localhost', port=8080)
