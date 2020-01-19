@@ -10,6 +10,8 @@
 import datetime
 import sqlite3
 import uuid
+import os
+from telethon.sync import TelegramClient
 from .db import Database
 
 class TelethonDatabase(Database):
@@ -26,6 +28,17 @@ class TelethonDatabase(Database):
             instantiation of this class
         """
         super(TelethonDatabase, self).__init__(database)
+
+        # Load in the API tokens required for a bot
+        api_id = os.environ.get('telethon_api_id', False)
+        api_hash = os.environ.get('telethon_api_hash', False)
+        api_token = os.environ.get('telethon_token', False)
+
+        # Create an instance of the Telethon bot
+        if api_id and api_hash and api_token:
+            self.bot = TelegramClient('bot', api_id, api_hash).start(bot_token=api_token)
+        else:
+            self.bot = False
 
         # Automatically create the table if it doesn't
         # already exist in the selected database
