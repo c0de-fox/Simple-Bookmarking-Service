@@ -30,10 +30,12 @@ Now that you have a running server, you can issue requests via a web browser, cu
 
 The following fields will be returned with `/get` and `/update` requests:
 
-* `uuid` - Required (generated automatically) - This is generated with the following criteria:
+* `uuid` - Required (generated automatically) - This is used for `/get`, `/update` and `/delete` requests
     * This is regnerated when updating the URI due to the fact that it is based on the URI of the bookmark
+    * This is generated with the following criteria:
     ```
-    Generate a UUID based on the SHA-1 hash of the python URL namespace identifier (which is 6ba7b811-9dad-11d1-80b4-00c04fd430c8) and a uri (which is a string)
+    Generate a UUID based on the SHA-1 hash of the python URL namespace identifier
+    (which is 6ba7b811-9dad-11d1-80b4-00c04fd430c8) and a uri (which is a string)
     ```
 * `uri` - Required (user provided) - This is a full link. Currently the API does not verify that it is reachable, so it can be any form of URI, including [UNC Paths](https://en.wikipedia.org/wiki/Path_(computing)#UNC), or even a bare string
 * `title` - Required (user provided) - A human readable word/set of words to recognize saved bookmarks quickly
