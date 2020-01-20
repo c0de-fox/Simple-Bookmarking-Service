@@ -9,8 +9,8 @@
 import os
 import _thread
 from bottle import Bottle, run, response, route, template
-from api import API
 from telethon.sync import TelegramClient, events
+from api import API
 
 _api = API()
 
